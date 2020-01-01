@@ -22,7 +22,7 @@ jobs:
           version: latest
       -
         name: Build Image
-        run: docker buildx image build --platform armhf . -t ${IMAGE_NAME}
+        run: docker buildx build --platform armhf . -t ${IMAGE_NAME}
       -
         name: Publish image
         if: success()
