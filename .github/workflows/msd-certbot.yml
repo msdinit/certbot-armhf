@@ -20,12 +20,9 @@ jobs:
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
           version: latest
+      - name: Login dockerhub
+        run: |
+          echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USER }} --password-stdin
       -
         name: Build Image
-        run: docker buildx build --platform armhf . -t ${IMAGE_NAME}
-      -
-        name: Publish image
-        if: success()
-        run : |
-          echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USER }} --password-stdin
-          docker push ${IMAGE_NAME}
+        run: docker buildx build -t ${IMAGE_NAME} --platform armhf --output "type=image,push=true" .
