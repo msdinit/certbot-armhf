@@ -26,8 +26,6 @@ jobs:
       -
         name: Publish image
         if: success()
-        uses: manusa/actions-publish-docker@master
-        with:
-          name: ${{ env.IMAGE_NAME }}
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run : |
+          echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USER }} --password-stdin
+          docker push ${IMAGE_NAME}
