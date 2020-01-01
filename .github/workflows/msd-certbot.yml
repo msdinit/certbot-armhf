@@ -1,0 +1,33 @@
+name: msd-certbot
+
+on:
+  push:
+    branches: master
+
+env:
+  IMAGE_NAME: "msdinit/certbot"
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v1
+      -
+        name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+      -
+        name: Build Image
+        run: docker buildx image build --platform armhf . -t ${IMAGE_NAME}
+      -
+        name: Publish image
+        if: success()
+        uses: manusa/actions-publish-docker@master
+        with:
+          name: ${{ env.IMAGE_NAME }}
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
