@@ -26,10 +26,3 @@ jobs:
       -
         name: Build Image
         run: docker buildx build -t ${IMAGE_NAME} --platform armhf --output "type=image,push=true" .
-      -
-        name: Update Docker Hub Description
-        uses: peter-evans/dockerhub-description@v2.1.0
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_HUB_USER }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          DOCKERHUB_REPOSITORY: ${{ env.IMAGE_NAME }}
