@@ -34,7 +34,7 @@ exec_certbot(){
   " > scheduler.txt
 
   crontab scheduler.txt
-  cron -f
+  crond -f
 }
 
 if [ -n "$1" ]; then
