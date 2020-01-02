@@ -21,7 +21,6 @@ exec_certbot(){
 
   certbot certonly \
     --agree-tos \
-    --dry-run \
     --non-interactive \
     -m "${EMAIL_ADDRESS}" \
     --dns-cloudflare \
